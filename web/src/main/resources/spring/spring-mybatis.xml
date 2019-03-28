@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <context:property-placeholder location="classpath:config/jdbc.properties" ignore-unresolvable="true" />
+
+    <!--数据源连接池配置-->
+    <bean id="jdbcMysql" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="jdbcUrl">
+            <value>${jdbc_Mysql.url}</value>
+        </property>
+        <property name="user">
+            <value>${jdbc_Mysql.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc_Mysql.password}</value>
+        </property>
+        <property name="driverClass">
+            <value>${jdbc.driverClassName}</value>
+        </property>
+        <property name="acquireIncrement">
+            <value>${c3p0.acquireIncrement}</value>
+        </property>
+        <property name="idleConnectionTestPeriod">
+            <value>${c3p0.idleConnectionTestPeriod}</value>
+        </property>
+        <property name="checkoutTimeout">
+            <value>${c3p0.checkoutTimeout}</value>
+        </property>
+        <property name="maxPoolSize">
+            <value>${c3p0.maxPoolSize}</value>
+        </property>
+        <property name="minPoolSize">
+            <value>${c3p0.minPoolSize}</value>
+        </property>
+        <property name="maxStatements">
+            <value>${c3p0.maxStatements}</value>
+        </property>
+        <property name="initialPoolSize">
+            <value>${c3p0.initialPoolSize}</value>
+        </property>
+    </bean>
+
+    <bean id="jdbcTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="jdbcMysql" />
+    </bean>
+
+    <!--创建SqlSessionFactory :访问数据库mapper，实体类型-->
+    <bean id="sqlSessionFactoryBalance" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--数据源-->
+        <property name="dataSource" ref="jdbcMysql"/>
+        <!--别名-->
+        <property name="typeAliasesPackage" value="com.afr.entrys"/>
+        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"/>
+    </bean>
+    <bean id="sqlSessionBalance" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactoryBalance" />
+    </bean>
+
+    <!--mybatis的dao接口和mapper的扫描-->
+    <bean id="balancescan"  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionBalance"/>
+        <!--property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryAdmin"/ -->
+        <property name="basePackage" value="com.afr.daos"/>
+        <!--<property name="annotationClass" value="com.qs.erp.daos.MyBatisRepository"/>-->
+    </bean>
+
+    <!-- 事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="jdbcMysql"/>
+    </bean>
+    <!-- 开启事务注解驱动 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

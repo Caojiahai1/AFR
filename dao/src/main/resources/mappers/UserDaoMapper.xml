@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.afr.com.afr.daos.baseInfoDaos.UserDao">
+    <resultMap id="ResultMap" type="User">
+
+    </resultMap>
+
+    <insert id="Insert">
+        INSERT INTO user(
+          RowId, Name, Code, CreateDate, Creater
+        ) VALUES (
+          #{RowId},#{Name},#{Code},#{CreateDate},#{Creater}
+        )
+    </insert>
+
+    <select id="Get" resultType="User">
+        SELECT * FROM user WHERE RowId = #{RowId}
+    </select>
+
+
+</mapper>
