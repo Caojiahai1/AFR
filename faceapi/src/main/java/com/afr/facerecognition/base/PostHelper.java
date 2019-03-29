@@ -1,11 +1,10 @@
-package com.afr.faceRecognition.base;
+package com.afr.facerecognition.base;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -19,7 +18,7 @@ public class PostHelper {
     private final static int CONNECT_TIME_OUT = 30000;
     private final static int READ_OUT_TIME = 50000;
     private static String boundaryString = getBoundary();
-    protected static byte[] post(String url, Map<String, String> map, Map<String, Byte[]> fileMap) throws Exception {
+    protected static byte[] post(String url, Map<String, String> map, Map<String, byte[]> fileMap) throws Exception {
         HttpURLConnection conne;
         URL url1 = new URL(url);
         conne = (HttpURLConnection) url1.openConnection();

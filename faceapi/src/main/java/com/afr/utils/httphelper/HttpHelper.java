@@ -1,4 +1,4 @@
-package com.afr.httpHelper;
+package com.afr.utils.httphelper;
 
 import javax.net.ssl.*;
 import java.io.*;

@@ -1,6 +1,6 @@
-package com.afr.faceRecognition.base;
+package com.afr.facerecognition.base;
 
-import com.afr.JsonHelper.JsonUtils;
+import com.afr.utils.jsonhelper.JsonUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,15 +19,15 @@ public abstract class BaseFaceRequest<T extends BaseFaceResponse> {
     protected abstract String getApiUrl();
 
     // 获取接口参数map
-    protected abstract Map<String, String> addApiParams();
-    protected abstract Map<String, Byte[]> addApiByteParams();
+    protected abstract Map<String, String> addApiParams() throws Exception;
+    protected abstract Map<String, byte[]> addApiByteParams();
     // 获取返回类型
     protected abstract Class<T> getResponseClass();
 
     // string请求参数
     private Map<String, String> paramsMap = new HashMap<>();
     // byte请求参数
-    private Map<String, Byte[]> byteMap = new HashMap<>();
+    private Map<String, byte[]> byteMap = new HashMap<>();
 
     // 请求
     private String getResponseString () throws Exception{
@@ -39,13 +39,28 @@ public abstract class BaseFaceRequest<T extends BaseFaceResponse> {
         return new String(bytes);
     }
 
+    /**
+     *@description
+     *@params  []
+     *@return  T
+     *@creater  yanliang
+     *@createdate  2019/3/29
+     *@info
+     */
     public T getResponse () {
         T response = null;
         try {
             String json = getResponseString();
             response = JsonUtils.readObject(json, getResponseClass());
         } catch (Exception e) {
+            try {
+                response = getResponseClass().newInstance();
+                response.setErrorMessage("系统错误");
+            } catch (InstantiationException e1) {
 
+            } catch (IllegalAccessException e1) {
+
+            }
         }
         return response;
     }

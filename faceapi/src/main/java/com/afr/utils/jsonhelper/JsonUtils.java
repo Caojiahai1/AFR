@@ -1,4 +1,4 @@
-package com.afr.JsonHelper;
+package com.afr.utils.jsonhelper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
