@@ -33,6 +33,8 @@
             <ref bean="stringHttpMessageConverter"></ref>
         </mvc:message-converters>
     </mvc:annotation-driven>
+    <!-- 静态资源 -->
+    <mvc:resources mapping="/**" location="/static-resources/" />
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <list>

@@ -26,7 +26,7 @@ public class TestController {
     @Autowired
     private MySpyMemcache mySpyMemcache;
 
-    @RequestMapping("/hello")
+    @RequestMapping("/face/hello")
     public String hello () {
         MyLogger.logger.error("hello");
         return "index";

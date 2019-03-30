@@ -44,6 +44,17 @@
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
 
+  <!-- sitemesh过滤 -->
+  <filter>
+    <filter-name>sitemesh</filter-name>
+    <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>sitemesh</filter-name>
+    <servlet-name>springmvc</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <!-- 配置springMVC前端控制器(即访问的统一入口) -->
   <servlet>
     <servlet-name>springmvc</servlet-name>

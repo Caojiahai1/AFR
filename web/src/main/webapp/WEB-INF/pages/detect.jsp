@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"%>
 <html>
 <body>
-    欢迎
+人脸检测
 </body>
 </html>

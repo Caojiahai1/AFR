@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/sitemesh/">
+    <excludes>
+        <pattern>/login</pattern>
+    </excludes>
+    <decorator name="main" page="basic.jsp">
+        <pattern>/face/*</pattern>
+    </decorator>
+</decorators>
