@@ -14,9 +14,16 @@
         }
     </style>
     <link rel="stylesheet" href="/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/3.3.5/css/bootstrap.min.back.css">
     <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/ajaxfileupload.js"></script>
     <script type="text/javascript" src="/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
+    <%--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.css"></script>--%>
+    <%--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
+    <%--<link rel="stylesheet" href="/bootstrap/fileinput/fileinput.min.css">--%>
+    <%--<script type="text/javascript" src="/bootstrap/fileinput/fileinput.min.js"></script>--%>
+    <%--<script type="text/javascript" src="/bootstrap/fileinput/locale/zh.js"></script>--%>
+    <script type="text/javascript" src="/js/main.js?v1"></script>
 
     <sitemesh:head/><!--会把被过滤页面head里面的东西（除了title）放在这个地方-->
 </head>

@@ -157,6 +157,12 @@ public class DetectFaceRequest extends BaseFaceRequest<DetectFaceResponse> {
         if (getReturnLandmark() == 1) {
             paramsMap.put("return_landmark", "1");
         }
+        if (getBeautyScoreMin() > 0) {
+            paramsMap.put("beauty_score_min", StringHelper.ToString(getBeautyScoreMin()));
+        }
+        if (getBeautyScoreMax() > 0) {
+            paramsMap.put("beauty_score_max", StringHelper.ToString(getBeautyScoreMax()));
+        }
         List<FaceAttributesEnum> returnAttributesList = getReturnAttributes();
         if (returnAttributesList != null && returnAttributesList.size() > 0) {
             paramsMap.put("return_attributes", StringHelper.listToString(returnAttributesList, ","));

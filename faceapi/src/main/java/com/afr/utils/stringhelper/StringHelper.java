@@ -23,6 +23,10 @@ public class StringHelper {
         return sb.toString();
     }
 
+    public static String ToString(Object o) {
+        return o == null ? "" : o.toString().isEmpty() ? "" : o.toString();
+    }
+
     public static boolean IsNullOrEmpty(String str) {
         return str == null || str.isEmpty() ? true : false;
     }
