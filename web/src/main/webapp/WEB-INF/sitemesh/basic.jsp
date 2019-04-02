@@ -24,6 +24,8 @@
     <%--<script type="text/javascript" src="/bootstrap/fileinput/fileinput.min.js"></script>--%>
     <%--<script type="text/javascript" src="/bootstrap/fileinput/locale/zh.js"></script>--%>
     <script type="text/javascript" src="/js/main.js?v1"></script>
+    <script type="text/javascript" src="/js/filehelper.js?v1"></script>
+    <script type="text/javascript" src="/js/jsonhelper.js?v1"></script>
 
     <sitemesh:head/><!--会把被过滤页面head里面的东西（除了title）放在这个地方-->
 </head>

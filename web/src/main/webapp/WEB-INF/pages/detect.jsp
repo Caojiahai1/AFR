@@ -1,7 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"%>
 <html>
 <head>
-
+    <style>
+        .mainImg{
+            width:460px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    </style>
 </head>
 <body>
 <div class="page-header" align="center">
@@ -12,8 +20,8 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-5" style="background-color: #f6f7fb">
-            <div class="fakeimg" style="width: 100%;" align="center">
-                <img src="/img/1.jpg"  class=".img-responsive" style="width:434px;height:434px;margin-top: 25px">
+            <div class="fakeimg" style="width: 100%;height: 450px" align="center">
+                <img id="mainImg" src="/img/1.jpg"  class=".img-responsive mainImg">
             </div>
             <div style="padding-top: 10px;margin-bottom: 10px" align="center">
                 <form class="form-inline" role="form">
@@ -28,7 +36,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="网络图片Url">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="model.fileUpload()">Go!</button>
+                        <button class="btn btn-default" type="button" onclick="model.detectNetImage()">Go!</button>
                     </span>
                     </div>
                 </form>
@@ -48,13 +56,12 @@
                     <p>菜鸟教程是一个提供最新的web技术站点，本站免费提供了建站相关的技术文档，帮助广大web技术爱好者快速入门并建立自己的网站。菜鸟先飞早入行——学的不仅是技术，更是梦想。</p>
                 </div>
                 <div class="tab-pane fade" id="ios">
-                    <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-                        TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+                    <pre id="jsonResponse"></pre>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/model/detectface/detect.js?V2"></script>
+<script type="text/javascript" src="/model/detectface/detect.js?V3"></script>
 </body>
 </html>
