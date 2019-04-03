@@ -1,40 +1,25 @@
-function initFileInput(ctrlName, uploadUrl) {
-    var control = $('#' + ctrlName);
-
-    control.fileinput({
-        language: 'zh', //设置语言
-        uploadUrl: uploadUrl, //上传的地址
-        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
-        showUpload: false, //是否显示上传按钮
-        showCaption: false,//是否显示标题
-        browseClass: "btn btn-primary", //按钮样式
-        dropZoneEnabled: false,
-        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-    });
-}
-
 var FileHelper = {};
 
-FileHelper.imageUpload = function (fileElementId, callback) {
-    var result = null;
+FileHelper.imageUpload = function (fileElementId, data, callback) {
     $.ajaxFileUpload
     (
         {
             url: '/image/upload', //用于文件上传的服务器端请求地址
             secureuri: false, //是否需要安全协议，一般设置为false
             fileElementId: fileElementId,
+            data: data,
             dataType: 'json', //返回值类型 一般设置为json
-            success: function (data, status)  //服务器成功响应处理函数
+            contentType : 'application/json;charset=utf-8',
+            success: function (result, status)  //服务器成功响应处理函数
             {
-                callback(data);
+                callback(result);
             },
-            error: function (data, status, e)//服务器响应失败处理函数
+            error: function (result, status, e)//服务器响应失败处理函数
             {
                 alert(e);
             }
         }
     )
-    return result;
 }
 
 FileHelper.getObjectURL = function (file) {

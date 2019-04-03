@@ -20,7 +20,6 @@ var formatJson = function (v, options) {
     var arr2 = new Array("{", "}");
     var pre = "";
     v = "";
-    console.log(arr)
     var chr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     var lth = chr.length;
     var prev = "";

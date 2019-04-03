@@ -3,11 +3,32 @@
 <head>
     <style>
         .mainImg{
-            width:460px;
-            position: relative;
+            width: auto;
+            height: auto;
+            max-height: 100%;
+            max-width: 100%;
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
+        }
+        .mainDiv{
+            width: 100%;
+            height: 450px;
+            margin-top: 10px
+        }
+        .listDiv{
+            width: 100%;
+            height: 150px;
+            margin-top: 10px
+        }
+        .elementDiv{
+            width: 30%;
+            height: 100%;
+            border: solid darkgrey 1px;
+        }
+        .elementRight{
+            margin-left: 5%;
         }
     </style>
 </head>
@@ -20,10 +41,21 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-5" style="background-color: #f6f7fb">
-            <div class="fakeimg" style="width: 100%;height: 450px" align="center">
+            <div class="col-sm-12 mainDiv">
                 <img id="mainImg" src="/img/1.jpg"  class=".img-responsive mainImg">
             </div>
-            <div style="padding-top: 10px;margin-bottom: 10px" align="center">
+            <div class="col-sm-12 listDiv">
+                <div class="col-sm-4 elementDiv">
+                    <img id="img1" localPath="" src="https://www.nvsay.com/uploads/allimg/180714/210-1PG41953060-L.jpg"  class=".img-responsive mainImg">
+                </div>
+                <div class="col-sm-4 elementDiv elementRight">
+                    <img id="img2" localPath="" src="https://www.nvsay.com/uploads/allimg/180714/210-1PG41953060-L.jpg"  class=".img-responsive mainImg">
+                </div>
+                <div class="col-sm-4 elementDiv elementRight">
+                    <img id="img3" localPath="" src="http://pic.rmb.bdstatic.com/b89fd326ce445ae01475f236b8f83c23.png@wm_2,t_55m+5a625Y+3L+aiqOiKsemUmei/h+S6huiKseWtow==,fc_ffffff,ff_U2ltSGVp,sz_18,x_12,y_12"  class=".img-responsive mainImg">
+                </div>
+            </div>
+            <div class="col-sm-12" style="padding-top: 10px;margin-bottom: 10px" align="center">
                 <form class="form-inline" role="form">
                     <div class="input-group">
                         <input id="lefile" name="lefile" type="file" style="display:none">
@@ -34,9 +66,9 @@
                         <%--<input id="file-Portrait" type="file" class="file-loading">--%>
                     </div>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="网络图片Url">
+                        <input id="NetUrl" type="text" class="form-control" placeholder="网络图片Url">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="model.detectNetImage()">Go!</button>
+                        <button class="btn btn-default" type="button" onclick="model.detectNetImage()">检索</button>
                     </span>
                     </div>
                 </form>
