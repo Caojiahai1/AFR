@@ -40,7 +40,7 @@ public class DetectFaceRequest extends BaseFaceRequest<DetectFaceResponse> {
     * 需要将属性组成一个用逗号分隔的字符串，属性之间的顺序没有要求。
     * 属性值使用枚举类FaceAttributesEumn
     * */
-    private List<FaceAttributesEnum> returnAttributes;
+    private String returnAttributes;
 
     // 是否检测并返回所有人脸的人脸关键点和人脸属性（仅正式 API Key 可以使用）
     private int calculateAll;
@@ -89,11 +89,11 @@ public class DetectFaceRequest extends BaseFaceRequest<DetectFaceResponse> {
         this.returnLandmark = returnLandmark;
     }
 
-    public List<FaceAttributesEnum> getReturnAttributes() {
+    public String getReturnAttributes() {
         return returnAttributes;
     }
 
-    public void setReturnAttributes(List<FaceAttributesEnum> returnAttributes) {
+    public void setReturnAttributes(String returnAttributes) {
         this.returnAttributes = returnAttributes;
     }
 
@@ -154,6 +154,9 @@ public class DetectFaceRequest extends BaseFaceRequest<DetectFaceResponse> {
         if (!StringHelper.IsNullOrEmpty(getImageBase64())) {
             paramsMap.put("image_base64", getImageBase64());
         }
+        if (!StringHelper.IsNullOrEmpty(getReturnAttributes())) {
+            paramsMap.put("return_attributes", getReturnAttributes());
+        }
         if (getReturnLandmark() == 1) {
             paramsMap.put("return_landmark", "1");
         }
@@ -163,10 +166,10 @@ public class DetectFaceRequest extends BaseFaceRequest<DetectFaceResponse> {
         if (getBeautyScoreMax() > 0) {
             paramsMap.put("beauty_score_max", StringHelper.ToString(getBeautyScoreMax()));
         }
-        List<FaceAttributesEnum> returnAttributesList = getReturnAttributes();
-        if (returnAttributesList != null && returnAttributesList.size() > 0) {
-            paramsMap.put("return_attributes", StringHelper.listToString(returnAttributesList, ","));
-        }
+//        List<FaceAttributesEnum> returnAttributesList = getReturnAttributes();
+//        if (returnAttributesList != null && returnAttributesList.size() > 0) {
+//            paramsMap.put("return_attributes", StringHelper.listToString(returnAttributesList, ","));
+//        }
         return paramsMap;
     }
 

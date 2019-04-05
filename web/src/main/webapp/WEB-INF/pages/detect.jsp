@@ -25,10 +25,29 @@
         .elementDiv{
             width: 30%;
             height: 100%;
-            border: solid darkgrey 1px;
+            border: solid #00b2e0 2px;
         }
         .elementRight{
             margin-left: 5%;
+        }
+        .mask{
+            filter: alpha(opacity=50);
+            opacity: 0.5;
+            background-color: #9D9D9D;
+        }
+        .resultImg{
+            width:110px;
+            height: 110px;
+            background-repeat:no-repeat;
+            float: left;
+            margin-left: 15px;
+            border: solid 2px #00b2e0
+        }
+        .resultImgList{
+            width: 100%;
+            height: 130px;
+            border-bottom: solid lightgrey 1px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -40,18 +59,18 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-sm-5" style="background-color: #f6f7fb">
+        <div id="left" class="col-sm-5" style="background-color: #f6f7fb;">
             <div class="col-sm-12 mainDiv">
-                <img id="mainImg" src="/img/1.jpg"  class=".img-responsive mainImg">
+                <img id="mainImg" src=""  class=".img-responsive mainImg">
             </div>
             <div class="col-sm-12 listDiv">
-                <div class="col-sm-4 elementDiv">
+                <div class="col-sm-4 elementDiv mask">
                     <img id="img1" localPath="" src="https://www.nvsay.com/uploads/allimg/180714/210-1PG41953060-L.jpg"  class=".img-responsive mainImg">
                 </div>
-                <div class="col-sm-4 elementDiv elementRight">
-                    <img id="img2" localPath="" src="https://www.nvsay.com/uploads/allimg/180714/210-1PG41953060-L.jpg"  class=".img-responsive mainImg">
-                </div>
-                <div class="col-sm-4 elementDiv elementRight">
+                <div class="col-sm-4 elementDiv mask elementRight">
+                    <img id="img2" localPath="" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554486870858&di=bedbbfe9e4a3cf6aa4b65e41b22bfcb7&imgtype=0&src=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F2_img%2F2013_32%2F730_1037532_155886.jpg"  class=".img-responsive mainImg">
+            </div>
+                <div class="col-sm-4 elementDiv mask elementRight">
                     <img id="img3" localPath="" src="http://pic.rmb.bdstatic.com/b89fd326ce445ae01475f236b8f83c23.png@wm_2,t_55m+5a625Y+3L+aiqOiKsemUmei/h+S6huiKseWtow==,fc_ffffff,ff_U2ltSGVp,sz_18,x_12,y_12"  class=".img-responsive mainImg">
                 </div>
             </div>
@@ -69,12 +88,12 @@
                         <input id="NetUrl" type="text" class="form-control" placeholder="网络图片Url">
                         <span class="input-group-btn">
                         <button class="btn btn-default" type="button" onclick="model.detectNetImage()">检索</button>
-                    </span>
+                        </span>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-sm-7">
+        <div id="right" class="col-sm-7">
             <ul id="myTab" class="nav nav-tabs">
                 <li class="active">
                     <a href="#home" data-toggle="tab">
@@ -83,9 +102,12 @@
                 </li>
                 <li><a href="#ios" data-toggle="tab">返回JSON</a></li>
             </ul>
-            <div id="myTabContent" class="tab-content">
+            <div id="myTabContent" class="tab-content" style="border: solid 1px lightgrey;border-top:1px solid hsla(0,0%,90%,.5);">
                 <div class="tab-pane fade in active" id="home">
-                    <p>菜鸟教程是一个提供最新的web技术站点，本站免费提供了建站相关的技术文档，帮助广大web技术爱好者快速入门并建立自己的网站。菜鸟先飞早入行——学的不仅是技术，更是梦想。</p>
+                    <div id="resultImgList" class="resultImgList">
+                    </div>
+                    <div id="attributes">
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="ios">
                     <pre id="jsonResponse"></pre>

@@ -55,7 +55,7 @@ public abstract class BaseFaceRequest<T extends BaseFaceResponse> {
         } catch (Exception e) {
             try {
                 response = getResponseClass().newInstance();
-                response.setErrorMessage("系统错误");
+                response.setErrorMessage(e.getMessage());
             } catch (InstantiationException e1) {
 
             } catch (IllegalAccessException e1) {

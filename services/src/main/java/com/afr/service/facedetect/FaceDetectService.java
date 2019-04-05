@@ -40,6 +40,7 @@ public class FaceDetectService {
         if (!StringHelper.IsNullOrEmpty(param.getNetUrl())) {
             request.setImageUrl(param.getNetUrl());
         }
+        request.setReturnAttributes("gender,age,smiling,headpose,facequality,blur,eyestatus,emotion,ethnicity,beauty,mouthstatus,eyegaze,skinstatus");
         DetectFaceResponse response = request.getResponse();
         if (response.IsSuccess()) {
             callResult.setSuccess(true);
