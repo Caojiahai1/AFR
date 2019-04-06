@@ -41,13 +41,23 @@
             background-repeat:no-repeat;
             float: left;
             margin-left: 15px;
-            border: solid 2px #00b2e0
+            /*border: solid 2px #00b2e0*/
         }
         .resultImgList{
             width: 100%;
             height: 130px;
             border-bottom: solid lightgrey 1px;
             margin-top: 20px;
+        }
+        .attribute{
+            margin-left: 20px;
+            font-size: 14px;
+            color: #3f3f4c;
+            line-height: 54px;
+        }
+        .attribute th{
+            width: 150px;
+            font-weight: bolder;
         }
     </style>
 </head>
@@ -75,7 +85,7 @@
                 </div>
             </div>
             <div class="col-sm-12" style="padding-top: 10px;margin-bottom: 10px" align="center">
-                <form class="form-inline" role="form">
+                <div class="form-inline" role="form">
                     <div class="input-group">
                         <input id="lefile" name="lefile" type="file" style="display:none">
                         <button type="button" class="btn btn-primary" onclick="$('input[id=lefile]').click();">
@@ -84,13 +94,14 @@
                         <%--<span class="input-group-addon" onclick="$('input[id=lefile]').click();" style="cursor: pointer; background-color: #e7e7e7"><i class="fa fa-folder-open"></i>Browse</span>--%>
                         <%--<input id="file-Portrait" type="file" class="file-loading">--%>
                     </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="input-group">
                         <input id="NetUrl" type="text" class="form-control" placeholder="网络图片Url">
                         <span class="input-group-btn">
                         <button class="btn btn-default" type="button" onclick="model.detectNetImage()">检索</button>
                         </span>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <div id="right" class="col-sm-7">

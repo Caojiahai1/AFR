@@ -50,10 +50,25 @@ DetectView.search = function (params) {
     //检索网络url
     this.detectNetImage = function () {
         var netUrl = $("#NetUrl").val();
+        if (!base.checkNetURL(netUrl)) {
+            alert("请输入正确的图片路径！");
+            $("#NetUrl").val("");
+            return;
+        }
         base.detectImage({netUrl : netUrl});
         $("#mainImg").attr("src", netUrl);
         base.addImg(netUrl, "");
         base.refreshMask();
+    }
+    
+    //检测网络图片是否存在
+    this.checkNetURL = function (src) {
+        var img = base.getNatureImgSize(src);
+        if (img.width > 0 && img.height >0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //ajax请求后台检测接口
@@ -147,7 +162,8 @@ DetectView.search = function (params) {
         var html = "<div id='master' class='col-sm-2 resultImg'>" +
                     "<img src='" + src + "' class= mainImg></div>";
         var str = "已检测到图中 " + responseJson.length + " 张人脸，并生成对应face_token，点击人脸图片查看结果信息。";
-        base.attributes["master"] = "<p>" + str + "</p>";
+        base.attributes["master"] = "<p style='font-size: 20px;width: 90%;" +
+            "margin-top: 25%;margin-left: 5%' align='center'>" + str + "</p>";
         for (var i = 0;i < (responseJson.length > 4 ? 4 : responseJson.length); i++) {
             var faceToken = responseJson[i].faceToken;
             base.attributes[faceToken] = base.drawFaceHtml(responseJson[i].attributes);
@@ -168,6 +184,10 @@ DetectView.search = function (params) {
     //imglist绑定点击事件
     this.bindResultImgListClick = function () {
         $(".resultImg").click(function () {
+            $(".resultImg").each(function () {
+                $(this).css("border", "0px");
+            });
+            $(this).css("border", "solid 2px #00b2e0");
             base.renderFaceHtml($(this).attr('id'));
         })
     }
@@ -177,13 +197,24 @@ DetectView.search = function (params) {
         if (attributes == undefined) {
             return "";
         }
-        var html = "<pre>" + formatJson(JSON.stringify(attributes)) + "</pre>";
+        var age = attributes.age.value;
+        var gender = attributes.gender.value == 'Female' ? '女性' : attributes.gender.value == 'Male' ? '男性' : '未知';
+        var ethnicity = attributes.ethnicity.value;
+        var beautyScore = attributes.gender.value == 'Female' ? attributes.beauty.femaleScore : attributes.beauty.maleScore;
+        var threshold = attributes.smile.threshold;
+        var smile = attributes.smile.value;
+        var html = "<table class='attribute'>" +
+            "<tr><th>年龄</th><td>" + age + "</td></tr>" +
+            "<tr><th>性别</th><td>" + gender + "</td></tr>" +
+            "<tr><th>人种</th><td>" + ethnicity + "</td></tr>" +
+            "<tr><th>微笑程度</th><td>值： " + smile + "；阈值：" + threshold + "</td></tr>" +
+            "<tr><th>颜值打分</th><td>" + beautyScore + "</td></tr>" +
+            "</table>"
         return html;
     }
 
     //渲染属性html
     this.renderFaceHtml = function (id) {
-        console.log(id)
         $("#attributes").html(base.attributes[id]);
     }
 
@@ -207,4 +238,9 @@ $(function () {
     $(".elementDiv").eq(0).trigger("click");
     model.attributes = {};
     $("#myTabContent").css("height", ($("#left").height() - $("#myTab").height()));
+    $("#NetUrl").keypress(function (e) {
+        if (e.keyCode == "13") {
+            model.detectNetImage();
+        }
+    })
 })
