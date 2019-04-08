@@ -26,4 +26,12 @@ public class DetectFaceRequestParam {
     public void setNetUrl(String netUrl) {
         this.netUrl = netUrl;
     }
+
+    @Override
+    public String toString() {
+        return "DetectFaceRequestParam{" +
+                "localPath='" + (localPath == null ? "" : localPath) + '\'' +
+                ",netUrl='" + (netUrl == null ? "" : netUrl) + '\'' +
+                '}';
+    }
 }

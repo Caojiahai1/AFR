@@ -106,7 +106,7 @@ DetectView.search = function (params) {
             if (result.object) {
                 base.addImg($("#mainImg").attr("src"), result.object.localPath);
                 base.showResponseJson(result.object.json);
-                base.showDetectResult(data.object);
+                base.showDetectResult(result.object.json);
             }
         } else {
             alert(result.message);

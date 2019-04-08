@@ -1,6 +1,7 @@
 package com.afr.facerecognition.domain.detectface.attributes;
 
 import com.afr.facerecognition.domain.detectface.enums.EthnicityEnum;
+import com.afr.utils.stringhelper.StringHelper;
 
 /**
  * @author Yan liang
@@ -12,10 +13,11 @@ public class Ethnicity {
     private String value;
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public void setValue(String value) {
-        this.value = EthnicityEnum.getEthnicityValue(value);
+        String ethnicityEnumstr = EthnicityEnum.getEthnicityValue(value);
+        this.value = StringHelper.IsNullOrEmpty(ethnicityEnumstr) ? value : ethnicityEnumstr;
     }
 }

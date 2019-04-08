@@ -8,7 +8,8 @@ package com.afr.facerecognition.domain.detectface.enums;
 public enum EthnicityEnum {
     ASIAN("亚洲人"),
     WHITE("白人"),
-    BLACK("黑人");
+    BLACK("黑人"),
+    INDIA("印第安人");
 
     private String ethnicity;
 
@@ -25,6 +26,17 @@ public enum EthnicityEnum {
         {
             if (type.toString().equals(enumValue)) {
                 return type.getEthnicity();
+            }
+        }
+        return "";
+    }
+
+    public static String getEthnicityEnum(String ethnicity) {
+        EthnicityEnum[] list= EthnicityEnum.values();
+        for (EthnicityEnum type : list)
+        {
+            if (type.getEthnicity().equals(ethnicity)) {
+                return type.toString();
             }
         }
         return "";
