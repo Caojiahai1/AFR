@@ -35,6 +35,22 @@
 <div>
     <sitemesh:body/><!--被过滤的页面body里面的内容放在这里。-->
 </div>
+
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><strong id="myModalLabel"></strong></h4>
+            </div>
+            <div class="modal-body" id="myModalBody" align="center"></div>
+            <div class="modal-footer">
+                <button id="modalButton" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                <%--<button type="button" class="btn btn-primary">提交更改</button>--%>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <%--<%@ include file="/common/foot.jsp"%>--%>
 </body>
 </html>

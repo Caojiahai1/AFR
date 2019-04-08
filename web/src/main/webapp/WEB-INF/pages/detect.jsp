@@ -111,7 +111,7 @@
                         检测结果
                     </a>
                 </li>
-                <li><a href="#ios" data-toggle="tab">返回JSON</a></li>
+                <li><a href="#json" data-toggle="tab">返回JSON</a></li>
             </ul>
             <div id="myTabContent" class="tab-content" style="border: solid 1px lightgrey;border-top:1px solid hsla(0,0%,90%,.5);">
                 <div class="tab-pane fade in active" id="home">
@@ -120,8 +120,9 @@
                     <div id="attributes">
                     </div>
                 </div>
-                <div class="tab-pane fade" id="ios">
-                    <pre id="jsonResponse"></pre>
+                <div class="tab-pane fade" id="json">
+                    <div id="jsonResponse" style="overflow: scroll"></div>
+                    <%--<pre id="jsonResponse"></pre>--%>
                 </div>
             </div>
         </div>

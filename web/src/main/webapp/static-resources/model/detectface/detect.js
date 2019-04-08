@@ -51,7 +51,7 @@ DetectView.search = function (params) {
     this.detectNetImage = function () {
         var netUrl = $("#NetUrl").val();
         if (!base.checkNetURL(netUrl)) {
-            alert("请输入正确的图片路径！");
+            mainWindow.alert("warn", "请输入正确的图片路径！");
             $("#NetUrl").val("");
             return;
         }
@@ -84,7 +84,7 @@ DetectView.search = function (params) {
                     base.showResponseJson(data.object);
                     base.showDetectResult(data.object);
                 } else {
-                    alert(data.message);
+                    mainWindow.alert("fail", data.message);
                 }
             }
         });
@@ -109,7 +109,7 @@ DetectView.search = function (params) {
                 base.showDetectResult(result.object.json);
             }
         } else {
-            alert(result.message);
+            mainWindow.alert("fail", result.message);
         }
         base.refreshMask();
     }
@@ -238,6 +238,7 @@ $(function () {
     $(".elementDiv").eq(0).trigger("click");
     model.attributes = {};
     $("#myTabContent").css("height", ($("#left").height() - $("#myTab").height()));
+    $("#jsonResponse").css("height", ($("#left").height() - $("#myTab").height()));
     $("#NetUrl").keypress(function (e) {
         if (e.keyCode == "13") {
             model.detectNetImage();
