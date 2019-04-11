@@ -36,6 +36,7 @@
     <sitemesh:body/><!--被过滤的页面body里面的内容放在这里。-->
 </div>
 
+<%-- 自定义弹出提示框 --%>
 <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

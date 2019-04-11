@@ -1,5 +1,6 @@
 package com.afr.converter;
 
+import com.afr.utils.DateUtil;
 import com.afr.utils.MyLogger;
 import org.springframework.core.convert.converter.Converter;
 
@@ -13,15 +14,9 @@ import java.util.Date;
  * @since 1.0.0
  */
 public class StringToDateConverter implements Converter<String, Date>{
-    private String datePattern;
-
-    public void setDatePattern(String datePattern) {
-        this.datePattern = datePattern;
-    }
-
     @Override
     public Date convert(String s) {
-        SimpleDateFormat sf = new SimpleDateFormat(this.datePattern);
+        SimpleDateFormat sf = DateUtil.getDateFormat();
         try {
             Date d = sf.parse(s);
             return d;

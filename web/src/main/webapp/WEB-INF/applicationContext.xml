@@ -20,7 +20,7 @@
 
     <context:property-placeholder location="classpath:config/globalConfig.properties" ignore-unresolvable="true"/>
 
-    <bean id="gloabConfig" class="com.afr.utils.GloabConfig">
+    <bean id="gloabConfig" class="com.afr.utils.GlobalConfig">
         <property name="uploadFilePath" value="${globalConfig.UploadFilePath}"></property>
         <property name="uploadImagePath" value="${globalConfig.UploadImagePath}"></property>
     </bean>

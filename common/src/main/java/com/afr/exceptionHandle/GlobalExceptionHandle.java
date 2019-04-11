@@ -1,6 +1,7 @@
 
 package com.afr.exceptionHandle;
 
+import com.afr.utils.MyConstant;
 import com.afr.utils.MyLogger;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +24,7 @@ public class GlobalExceptionHandle implements HandlerExceptionResolver {
             response.setStatus(500);
             response.setContentType("application/json;charset=utf-8");
             try {
-                response.getWriter().write("业务异常");
+                response.getWriter().write(MyConstant.SYSTEM_ERROR);
                 response.getWriter().flush();
             } catch (Exception e1) {
                 // TODO Auto-generated catch block

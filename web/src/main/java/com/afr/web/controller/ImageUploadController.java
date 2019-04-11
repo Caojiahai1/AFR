@@ -3,7 +3,7 @@ package com.afr.web.controller;
 import com.afr.entrys.businessdomain.DetectFaceRequestParam;
 import com.afr.service.facedetect.FaceDetectService;
 import com.afr.utils.CallResult;
-import com.afr.utils.GloabConfig;
+import com.afr.utils.GlobalConfig;
 import com.afr.utils.MyConstant;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +28,7 @@ import java.util.Map;
 public class ImageUploadController {
 
     @Autowired
-    private GloabConfig gloabConfig;
+    private GlobalConfig globalConfig;
     @Autowired
     private FaceDetectService faceDetectService;
 
@@ -44,7 +44,7 @@ public class ImageUploadController {
         }
         try {
 
-            String realImagePath = gloabConfig.getUploadImagePath();
+            String realImagePath = globalConfig.getUploadImagePath();
             File file = new File(realImagePath, lefile.getOriginalFilename());
             //这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
             //此处也可以使用Spring提供的MultipartFile.transferTo(File dest)方法实现文件的上传

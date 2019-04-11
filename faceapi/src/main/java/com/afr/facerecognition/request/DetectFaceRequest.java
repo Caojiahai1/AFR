@@ -3,12 +3,10 @@ package com.afr.facerecognition.request;
 import com.afr.utils.filehelper.FileHelper;
 import com.afr.utils.stringhelper.StringHelper;
 import com.afr.facerecognition.base.BaseFaceRequest;
-import com.afr.facerecognition.domain.FaceAttributesEnum;
 import com.afr.facerecognition.response.DetectFaceResponse;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
-public class GloabConfig {
+public class GlobalConfig {
     private String uploadFilePath;
 
     private String uploadImagePath;

@@ -57,7 +57,6 @@
         <property name="converters">
             <list>
                 <bean class="com.afr.converter.StringToDateConverter">
-                    <property name="datePattern" value="yyyy-MM-dd"></property>
                 </bean>
             </list>
         </property>
