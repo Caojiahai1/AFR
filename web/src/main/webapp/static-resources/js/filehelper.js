@@ -1,6 +1,6 @@
 var FileHelper = {};
 
-FileHelper.imageUpload = function (fileElementId, data, callback) {
+FileHelper.imageUpload = function (fileElementId, data, callback, param) {
     $.ajaxFileUpload
     (
         {
@@ -12,11 +12,11 @@ FileHelper.imageUpload = function (fileElementId, data, callback) {
             contentType : 'application/json;charset=utf-8',
             success: function (result, status)  //服务器成功响应处理函数
             {
-                callback(result);
+                callback(result, param);
             },
             error: function (result, status, e)//服务器响应失败处理函数
             {
-                alert(e);
+                mainWindow.alert("fail", e);
             }
         }
     )
@@ -33,4 +33,21 @@ FileHelper.getObjectURL = function (file) {
         url = window.webkitURL.createObjectURL(file) ;
     }
     return url ;
+}
+
+//获取图片原生width，height
+FileHelper.getNatureImgSize = function (src) {
+    var image = new Image();
+    image.src = src;
+    return {width : image.width, height : image.height};
+}
+
+//检测网络图片是否存在
+FileHelper.checkNetURL = function (src) {
+    var img = FileHelper.getNatureImgSize(src);
+    if (img.width > 0 && img.height >0) {
+        return true;
+    } else {
+        return false;
+    }
 }

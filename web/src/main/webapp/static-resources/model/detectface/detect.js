@@ -7,7 +7,7 @@ DetectView.search = function (params) {
     //每个人脸html
     this.attributes = {};
 
-    //想图片列表插入新检测的图片
+    //向图片列表插入新检测的图片
     this.addImg = function (url, localPath) {
         if (!base.checkHasImg(url)) {
             return;
@@ -50,7 +50,7 @@ DetectView.search = function (params) {
     //检索网络url
     this.detectNetImage = function () {
         var netUrl = $("#NetUrl").val();
-        if (!base.checkNetURL(netUrl)) {
+        if (!FileHelper.checkNetURL(netUrl)) {
             mainWindow.alert("warn", "请输入正确的图片路径！");
             $("#NetUrl").val("");
             return;
@@ -61,16 +61,6 @@ DetectView.search = function (params) {
         base.refreshMask();
     }
     
-    //检测网络图片是否存在
-    this.checkNetURL = function (src) {
-        var img = base.getNatureImgSize(src);
-        if (img.width > 0 && img.height >0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     //ajax请求后台检测接口
     this.detectImage = function (param) {
         $.ajax({
@@ -95,14 +85,13 @@ DetectView.search = function (params) {
     this.fileUpload = function () {
         var data = {detectFace : true};
         var json = JSON.stringify(data);
-        var result = FileHelper.imageUpload("lefile", {json : json}, detectImage);
+        FileHelper.imageUpload("lefile", {json : json}, uploadImageCallback);
+        base.clearFaceOutLine();
     }
 
     //上传图片回调函数
-    var detectImage = function (result) {
+    var uploadImageCallback = function (result) {
         if (result.success) {
-            // localPath = result.object;
-            // base.detectLocalImage(localPath);
             if (result.object) {
                 base.addImg($("#mainImg").attr("src"), result.object.localPath);
                 base.showResponseJson(result.object.json);
@@ -114,16 +103,11 @@ DetectView.search = function (params) {
         base.refreshMask();
     }
 
-    //展示返回json
-    this.showResponseJson = function (json) {
-        $("#jsonResponse").html(formatJson(JSON.stringify(json)));
-    }
-
     //绑定上传图片事件
     this.bindFileChange = function () {
         $("#lefile").change(function () {
             if (this.files[0] != undefined) {
-                model.fileUpload();
+                base.fileUpload();
                 $("#mainImg").attr("src", FileHelper.getObjectURL(this.files[0]));
             }
             // change事件触发一次后失效bug
@@ -131,10 +115,16 @@ DetectView.search = function (params) {
         })
     }
 
+    //展示返回json
+    this.showResponseJson = function (json) {
+        $("#jsonResponse").html(formatJson(JSON.stringify(json)));
+    }
+
     //imglist绑定点击事件
     this.bindImgListClick = function () {
         $(".elementDiv").click(function () {
             base.refreshMask($(this));
+            base.clearFaceOutLine();
             //img元素
             var imgElement = $(this).children().eq(0);
             if (imgElement.attr("localPath") != undefined && imgElement.attr("localPath") != '') {
@@ -146,19 +136,13 @@ DetectView.search = function (params) {
         })
     }
 
-    //获取图片原生width，height
-    this.getNatureImgSize = function (src) {
-        var image = new Image();
-        image.src = src;
-        return {width : image.width, height : image.height};
-    }
-    
     //列出解析到的人脸
     this.showDetectResult = function (responseJson) {
+        var parentDiv = document.getElementById('mainDiv');
         //每次检测清空上次的查询结果
         base.attributes = {};
         var src = $("#mainImg").attr("src");
-        var natureImgSize = base.getNatureImgSize(src);
+        var natureImgSize = FileHelper.getNatureImgSize(src);
         var html = "<div id='master' class='col-sm-2 resultImg'>" +
                     "<img src='" + src + "' class= mainImg></div>";
         var str = "已检测到图中 " + responseJson.length + " 张人脸，并生成对应face_token，点击人脸图片查看结果信息。";
@@ -166,8 +150,11 @@ DetectView.search = function (params) {
             "margin-top: 25%;margin-left: 5%' align='center'>" + str + "</p>";
         for (var i = 0;i < (responseJson.length > 4 ? 4 : responseJson.length); i++) {
             var faceToken = responseJson[i].faceToken;
-            base.attributes[faceToken] = base.drawFaceHtml(responseJson[i].attributes);
+            base.attributes[faceToken] = base.drawFaceAttributesHtml(responseJson[i].attributes);
+            //检测到的人脸位置
             var detectPosition = responseJson[i].faceRectangle;
+            //方框框出检测到的人脸
+            base.drawFaceOutLine(detectPosition, parentDiv);
             var ratio = 110 / Number(detectPosition.width);
             var width = natureImgSize.width * ratio;
             var left = (0 - (Number(detectPosition.left) * ratio)) + "px";
@@ -179,6 +166,43 @@ DetectView.search = function (params) {
         $("#resultImgList").html(html);
         base.bindResultImgListClick();
         base.renderFaceHtml('master');
+    }
+    
+    //切换图片时，清除上一个图片框出的人脸位置
+    this.clearFaceOutLine = function () {
+        var parentDiv = document.getElementById('mainDiv');
+        var OutLines = document.getElementsByClassName('tempOutLine');
+        while (OutLines.length > 0) {
+            parentDiv.removeChild(OutLines[0]);
+        }
+    }
+
+    //在主图上用方框框出检测到的人脸
+    this.drawFaceOutLine = function (position, parentDiv) {
+        var mainImg = $("#mainImg");
+        var mainDiv = $("#mainDiv");
+        var mainImgWidth = mainImg.width();
+        var mainImgHeight = mainImg.height();
+        var mainDivWidth = mainDiv.outerWidth();
+        var mainDivHeight = mainDiv.outerHeight();
+        var natureImg = FileHelper.getNatureImgSize(mainImg.attr("src"));
+        var ratio = mainImgWidth / Number(natureImg.width);
+        var left = Number(position.left) * ratio + (mainDivWidth - mainImgWidth) / 2;
+        var top = Number(position.top) * ratio + (mainDivHeight - mainImgHeight) / 2;
+        var width = Number(position.width) * ratio;
+        var height = Number(position.height) * ratio;
+        var div = document.createElement("div");
+        //为div添加样式
+        var style = document.createAttribute("style");
+        div.className = "tempOutLine";
+        div.setAttributeNode(style);
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.position = "absolute";
+        div.style.left = left + "px";
+        div.style.top = top + "px";
+        div.style.border = "solid 2px #00b2e0";
+        parentDiv.appendChild(div);
     }
 
     //imglist绑定点击事件
@@ -193,7 +217,7 @@ DetectView.search = function (params) {
     }
     
     //根据属性绘制每个人脸html
-    this.drawFaceHtml = function (attributes) {
+    this.drawFaceAttributesHtml = function (attributes) {
         if (attributes == undefined) {
             return "";
         }
@@ -229,19 +253,19 @@ DetectView.search = function (params) {
     }
 }
 
-var model = new DetectView.search();
+var detectModel = new DetectView.search();
 $(function () {
-    model.bindFileChange()
-    model.initImgList();
-    model.bindImgListClick();
+    detectModel.bindFileChange()
+    detectModel.initImgList();
+    detectModel.bindImgListClick();
     //触发默认第一张图片click事件
     $(".elementDiv").eq(0).trigger("click");
-    model.attributes = {};
+    detectModel.attributes = {};
     $("#myTabContent").css("height", ($("#left").height() - $("#myTab").height()));
     $("#jsonResponse").css("height", ($("#left").height() - $("#myTab").height()));
     $("#NetUrl").keypress(function (e) {
         if (e.keyCode == "13") {
-            model.detectNetImage();
+            detectModel.detectNetImage();
         }
     })
 })

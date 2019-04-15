@@ -11,22 +11,22 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-                <li><a href="#" url="/face/detect">人脸检测</a></li>
-                <li><a href="#" url="/face/compare">人脸对比</a></li>
-                <li><a href="#" url="/face/search">人脸搜索</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        个人中心 <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">个人信息</a></li>
-                        <li><a href="#">设置</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">使用指南</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">另一个分离的链接</a></li>
-                    </ul>
-                </li>
+                <li><a href="#/detect" url="/face/detect">人脸检测</a></li>
+                <li><a href="#/compare" url="/face/compare">人脸比对</a></li>
+                <li><a href="#/search" url="/face/search">人脸搜索</a></li>
+                <%--<li class="dropdown">--%>
+                    <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--%>
+                        <%--个人中心 <b class="caret"></b>--%>
+                    <%--</a>--%>
+                    <%--<ul class="dropdown-menu">--%>
+                        <%--<li><a href="#">个人信息</a></li>--%>
+                        <%--<li><a href="#">设置</a></li>--%>
+                        <%--<li class="divider"></li>--%>
+                        <%--<li><a href="#">使用指南</a></li>--%>
+                        <%--<li class="divider"></li>--%>
+                        <%--<li><a href="#">另一个分离的链接</a></li>--%>
+                    <%--</ul>--%>
+                <%--</li>--%>
             </ul>
         </div>
     </div>

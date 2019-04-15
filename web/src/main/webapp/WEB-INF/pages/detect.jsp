@@ -15,7 +15,8 @@
         .mainDiv{
             width: 100%;
             height: 450px;
-            margin-top: 10px
+            margin-top: 10px;
+            padding: 0px;
         }
         .listDiv{
             width: 100%;
@@ -70,7 +71,7 @@
 <div class="container">
     <div class="row">
         <div id="left" class="col-sm-5" style="background-color: #f6f7fb;">
-            <div class="col-sm-12 mainDiv">
+            <div id="mainDiv" class="col-sm-12 mainDiv">
                 <img id="mainImg" src=""  class=".img-responsive mainImg">
             </div>
             <div class="col-sm-12 listDiv">
@@ -98,7 +99,7 @@
                     <div class="input-group">
                         <input id="NetUrl" type="text" class="form-control" placeholder="网络图片Url">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="model.detectNetImage()">检索</button>
+                        <button class="btn btn-default" type="button" onclick="detectModel.detectNetImage()">检索</button>
                         </span>
                     </div>
                 </div>

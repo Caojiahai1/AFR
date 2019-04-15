@@ -7,6 +7,7 @@ import com.afr.memcache.MySpyMemcache;
 import com.afr.utils.CallResult;
 import com.afr.utils.MyConstant;
 import com.afr.utils.MyLogger;
+import com.afr.utils.MyMD5Help;
 import com.afr.utils.jsonhelper.JsonUtils;
 import com.afr.utils.stringhelper.StringHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,14 +38,16 @@ public class FaceDetectService {
      */
     public CallResult detectImage(DetectFaceRequestParam param) {
         CallResult callResult = new CallResult();
-        String key = param.toString().length() >= 250 ? param.toString().substring(0,249) : param.toString();
+//        String key = param.toString().length() >= 250 ? param.toString().substring(0,249) : param.toString();
+        //MD5生成key
+        String key = MyMD5Help.getMD5(param.toString());
         String responseJson = (String) mySpyMemcache.get(key);
         DetectFaceResponse response = null;
         if (responseJson != null && !StringHelper.IsNullOrEmpty(responseJson)) {
             try {
                 response = JsonUtils.readObject(responseJson, DetectFaceResponse.class);
             } catch (IOException e) {
-                response = new DetectFaceResponse();
+                MyLogger.logger.error("从缓存读取key:" + key + "异常:" + e.getMessage());
             }
         }
         if (response != null && response.IsSuccess()) {
