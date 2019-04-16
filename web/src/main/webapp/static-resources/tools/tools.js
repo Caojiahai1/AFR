@@ -25,6 +25,12 @@ myTools.loadingOver = function () {
 
 //圈圈加载
 myTools.circleLoading = function (parentId) {
+    var parent;
+    if (parentId != undefined && parentId != '') {
+        parent = document.getElementById(parentId);
+    } else {
+        parent = document.body;
+    }
     var spinner = document.createElement("div");
     spinner.className = "spinner2";
     for (var i = 1; i < 4; i++) {
@@ -37,17 +43,23 @@ myTools.circleLoading = function (parentId) {
         }
         spinner.appendChild(container);
     }
-    document.getElementById(parentId).appendChild(spinner);
+    parent.appendChild(spinner);
     document.body.style.userSelect = "none";
     document.body.style.pointerEvents = "none";
 }
 
 //圈圈加载结束
 myTools.circleLoadingOver = function (parentId) {
-    var childList = document.getElementById(parentId).childNodes;
+    var parent;
+    if (parentId != undefined && parentId != '') {
+        parent = document.getElementById(parentId);
+    } else {
+        parent = document.body;
+    }
+    var childList = parent.childNodes;
     for (var i = 0; i < childList.length; i++) {
         if (childList[i].className == "spinner2") {
-            document.getElementById(parentId).removeChild(childList[i]);
+            parent.removeChild(childList[i]);
             break;
         }
     }
