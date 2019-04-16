@@ -13,6 +13,8 @@
             padding: 0px;
         }
     </style>
+    <link rel="stylesheet" href="/tools/loading.css">
+    <script type="text/javascript" src="/tools/tools.js?v1"></script>
     <link rel="stylesheet" href="/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bootstrap/3.3.5/css/bootstrap.min.back.css">
     <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>

@@ -64,7 +64,7 @@ DetectView.search = function (params) {
     //ajax请求后台检测接口
     this.detectImage = function (param) {
         $.ajax({
-            url: "/FaceDetect/detectImage?random=" + Math.random(),
+            url: "/DetectFace/detectImage?random=" + Math.random(),
             type: "json",
             method: "post",
             data: param,
@@ -76,6 +76,12 @@ DetectView.search = function (params) {
                 } else {
                     mainWindow.alert("fail", data.message);
                 }
+            },
+            beforeSend: function () {
+                myTools.circleLoading("mainDiv");
+            },
+            complete: function () {
+                myTools.circleLoadingOver("mainDiv");
             }
         });
     }
@@ -117,7 +123,7 @@ DetectView.search = function (params) {
 
     //展示返回json
     this.showResponseJson = function (json) {
-        $("#jsonResponse").html(formatJson(JSON.stringify(json)));
+        $("#jsonResponse").html(formatJson(JSON.stringify(json)), 6);
     }
 
     //imglist绑定点击事件

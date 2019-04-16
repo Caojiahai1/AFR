@@ -34,27 +34,17 @@
             left: 50%;
             transform: translate(-50%,-50%);
         }
-        .resultImg1{
+        .resultImg1,.resultImg2{
             width:44%;
             height: 44%;
             background-repeat:no-repeat;
             float: left;
             margin-left: 4%;
-            /*border: solid 1px lightgrey;*/
-            margin-top: 4%;
-        }
-        .resultImg2{
-            width:44%;
-            height: 44%;
-            background-repeat:no-repeat;
-            float: left;
-            margin-left: 4%;
-            /*border: solid 1px lightgrey;*/
             margin-top: 4%;
         }
     </style>
 </head>
-<body>
+<body id="body">
 <div class="page-header" align="center">
     <h1 style="    font-size: 24px;
     font-family: PingFangSC-Semibold,Microsoft YaHei;
@@ -89,7 +79,7 @@
                         </span>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-success" type="button" onclick="compareModel.compare()">
+                    <button class="btn btn-success" type="button" onclick="compareModel.doCompare()">
                         <span class="glyphicon glyphicon-random"></span> 进行比对
                     </button>
                 </div>
@@ -107,6 +97,7 @@
             <div id="myTabContent" class="tab-content" style="border: solid 1px lightgrey;border-top:1px solid hsla(0,0%,90%,.5);">
                 <div class="tab-pane fade in active" id="home">
                     <div id="result">
+                        <p id="analysisResult" align="center" style="font-size: 18px;margin-top: 25%;"></p>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="json">

@@ -1,6 +1,7 @@
 var FileHelper = {};
 
 FileHelper.imageUpload = function (fileElementId, data, callback, param) {
+    myTools.loading();
     $.ajaxFileUpload
     (
         {
@@ -12,6 +13,7 @@ FileHelper.imageUpload = function (fileElementId, data, callback, param) {
             contentType : 'application/json;charset=utf-8',
             success: function (result, status)  //服务器成功响应处理函数
             {
+                myTools.loadingOver();
                 callback(result, param);
             },
             error: function (result, status, e)//服务器响应失败处理函数

@@ -65,4 +65,16 @@ public class CompareFaceRequestParam {
     public void setLocalPath2(String localPath2) {
         this.localPath2 = localPath2;
     }
+
+    @Override
+    public String toString() {
+        return "CompareFaceRequestParam{" +
+                "faceToken1='" + (faceToken1 == null ? "" : faceToken1) + '\'' +
+                ",faceToken2='" + (faceToken2 == null ? "" : faceToken2) + '\'' +
+                ",netUrl1='" + (netUrl1 == null ? "" : netUrl1) + '\'' +
+                ",netUrl2='" + (netUrl2 == null ? "" : netUrl2) + '\'' +
+                ",localPath1='" + (localPath1 == null ? "" : localPath1) + '\'' +
+                ",localPath2='" + (localPath2 == null ? "" : localPath2) + '\'' +
+                '}';
+    }
 }

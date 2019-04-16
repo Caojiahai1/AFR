@@ -18,13 +18,15 @@ CompareView.search = function () {
             mainDivId : "imagediv1",
             mainImgId : "image1",
             tempClassName : "tempOutLine1",
-            resultClass : "resultImg1"
+            resultClass : "resultImg1",
+            imageResultId : "image1Result"
         },
         2 : {
             mainDivId : "imagediv2",
             mainImgId : "image2",
             tempClassName : "tempOutLine2",
-            resultClass : "resultImg2"
+            resultClass : "resultImg2",
+            imageResultId : "image2Result"
         }
     }
 
@@ -62,6 +64,7 @@ CompareView.search = function () {
         if (!base.uploadImagePositionCheck(currentImgNum)) {
             return;
         }
+        base.clearLastDetectResult(currentImgNum);
         $("#" + base.staticInfo[currentImgNum].mainImgId).attr("src", currentImgSrc);
         base.clearFaceOutLine(base.staticInfo[currentImgNum].mainDivId, base.staticInfo[currentImgNum].tempClassName);
         var data = {detectFace : true};
@@ -79,6 +82,7 @@ CompareView.search = function () {
             if (result.object) {
                 var currentImgSrc = param.currentImgSrc;
                 var currentImgNum = param.currentImgNum;
+                $("#" + base.staticInfo[currentImgNum].mainImgId).attr("localPath", result.object.localPath);
                 base.showDetectFaces(result.object.json, currentImgSrc, currentImgNum);
             }
         } else {
@@ -108,11 +112,10 @@ CompareView.search = function () {
         var faceInfoTemp = {};
         if (currentImgNum == 1) {
             base.faceInfo1 = faceInfoTemp;
-            parentDiv = $("#image1Result");
         } else if (currentImgNum == 2) {
             base.faceInfo2 = faceInfoTemp;
-            parentDiv = $("#image2Result");
         }
+        parentDiv = $("#" + base.staticInfo[currentImgNum].imageResultId);
         var resultClass = base.staticInfo[currentImgNum].resultClass;
         var html = '';
         for (var i = 0;i < (responseJson.length > 4 ? 4 : responseJson.length); i++) {
@@ -198,6 +201,11 @@ CompareView.search = function () {
             parentDiv.removeChild(OutLines[0]);
         }
     }
+    
+    //新上传图片时，清除上一张图片的检测结果
+    this.clearLastDetectResult = function (currentImgNum) {
+        $("#" + base.staticInfo[currentImgNum].imageResultId).html("");
+    }
 
     //检索网络url
     this.detectNetImage = function () {
@@ -212,14 +220,16 @@ CompareView.search = function () {
             return;
         }
         base.detectImage(netUrl, currentImgNum);
+        base.clearLastDetectResult(currentImgNum);
         base.clearFaceOutLine(base.staticInfo[currentImgNum].mainDivId, base.staticInfo[currentImgNum].tempClassName);
         $("#" + base.staticInfo[currentImgNum].mainImgId).attr("src", netUrl);
+        $("#" + base.staticInfo[currentImgNum].mainImgId).attr("localPath", "");
     }
 
     //ajax请求后台检测接口
     this.detectImage = function (currentImgSrc, currentImgNum) {
         $.ajax({
-            url: "/FaceDetect/detectImage?random=" + Math.random(),
+            url: "/DetectFace/detectImage?random=" + Math.random(),
             type: "json",
             method: "post",
             data: {netUrl : currentImgSrc},
@@ -230,8 +240,103 @@ CompareView.search = function () {
                 } else {
                     mainWindow.alert("fail", data.message);
                 }
+            },
+            beforeSend: function () {
+                myTools.circleLoading(base.staticInfo[currentImgNum].mainDivId);
+            },
+            complete: function () {
+                myTools.circleLoadingOver(base.staticInfo[currentImgNum].mainDivId);
             }
         });
+    }
+    
+    //比较完成后，重新在图上框出人脸位置
+    this.drawComparedFaceOutline = function () {
+        
+    }
+
+    //根据返回比较的值，分析是否同一个人
+    this.analysisResults = function (confidence, e3, e4, e5) {
+        if (confidence < e3) {
+            return "不是同一个人";
+        }
+        if (confidence > e3 && confidence < e4) {
+            if (confidence < 80) {
+                return "大概率不是同一个人";
+            } else {
+                return "可能是同一个人";
+            }
+        }
+        if (confidence > e4 && confidence < e5) {
+            if (confidence < 80) {
+                return "可能不是同一个人";
+            } else {
+                return "大概率是同一个人";
+            }
+        }
+        if (confidence > e5) {
+            if (confidence > 80) {
+                return "是同一个人";
+            } else {
+                return "大概率是同一个人";
+            }
+        }
+    }
+    
+    //进行比较
+    this.doCompare = function () {
+        var param = {};
+        //第一张图片参数
+        if (base.faceToken1 == undefined || base.faceToken1 == '') {
+            var img1 = $("#" + base.staticInfo[1].mainImgId);
+            if (img1.attr("localPath") != undefined && img1.attr("localPath") != '') {
+                param.localPath1 = img1.attr("localPath");
+            } else {
+                param.netUrl1 = img1.attr("src");
+            }
+        } else {
+            param.faceToken1 = base.faceToken1;
+        }
+        //第二张图片参数
+        if (base.faceToken2 == undefined || base.faceToken2 == '') {
+            var img2 = $("#" + base.staticInfo[2].mainImgId);
+            if (img2.attr("localPath") != undefined && img2.attr("localPath") != '') {
+                param.localPath2 = img2.attr("localPath");
+            } else {
+                param.netUrl2 = img2.attr("src");
+            }
+        } else {
+            param.faceToken2 = base.faceToken2;
+        }
+        $.ajax({
+            url: "/CompareFace/doCompare?random=" + Math.random(),
+            type: "json",
+            method: "post",
+            data: param,
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    delete data.object.requestId;
+                    var json = data.object;
+                    base.showResponseJson(json);
+                    var thresholds = json.thresholds;
+                    $("#analysisResult").text("解析结果:" + base.analysisResults(Number(json.confidence), Number(thresholds.e3), Number(thresholds.e4), Number(thresholds.e5)));
+                } else {
+                    mainWindow.alert("fail", data.message);
+                }
+            },
+            beforeSend: function () {
+                myTools.loading();
+            },
+            complete: function () {
+                myTools.loadingOver();
+            }
+        });
+    }
+
+    //展示返回json
+    this.showResponseJson = function (json) {
+        $("#jsonResponse").html(formatJson(JSON.stringify(json)), 2);
     }
 }
 
@@ -240,10 +345,12 @@ $(function () {
     compareModel.bindFileChange();
     compareModel.bindMainImgClick();
     compareModel.clear();
-    //触发默认第一张图片click事件
+    //触发默认图片检测
     $(".compareDiv").eq(0).trigger("click");
     compareModel.detectImage($("#" + compareModel.staticInfo[1].mainImgId).attr("src"), 1);
     compareModel.detectImage($("#" + compareModel.staticInfo[2].mainImgId).attr("src"), 2);
+    $("#myTabContent").css("height", ($("#left").height() - $("#myTab").height()));
+    $("#jsonResponse").css("height", ($("#left").height() - $("#myTab").height()));
     $("#compareNetUrl").keypress(function (e) {
         if (e.keyCode == "13") {
             compareModel.detectNetImage();

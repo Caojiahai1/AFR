@@ -1,4 +1,4 @@
-var formatJson = function (v, options) {
+var formatJson = function (v, options, chrNum) {
     v = v.replace(/&quot;/g, '"');
     v = v.replace(/ /g, '');
     var reg = /(\[|{|,)/g;
@@ -9,10 +9,10 @@ var formatJson = function (v, options) {
     v = v.replace(reg, function (a, b) {
         return "<br/>" + a;
     });
-    reg = /(:\[)/g;
-    v = v.replace(reg, function (a, b) {
-        return a[0] + "<br/>" + a[1];
-    });
+    // reg = /(:\[)/g;
+    // v = v.replace(reg, function (a, b) {
+    //     return a[0] + "<br/>" + a[1];
+    // });
 
     var arr = v.toString().split("<br/>")
 
@@ -20,7 +20,14 @@ var formatJson = function (v, options) {
     var arr2 = new Array("{", "}");
     var pre = "";
     v = "";
-    var chr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    if (typeof chrNum != 'number') {
+        //设默认6个空格
+        chrNum = 6;
+    }
+    var chr = "";
+    for (var i = 0; i < (chrNum > 0 ? chrNum : 6); i++) {
+        chr += "&nbsp;";
+    }
     var lth = chr.length;
     var prev = "";
     $.each(arr, function (index, item) {
@@ -29,7 +36,7 @@ var formatJson = function (v, options) {
                 prev += chr;
             }
             v += prev + item + "<br />";
-        } else if (item == "]" || item == "}" || item == "},") {
+        } else if (item == "]" || item == "]," || item == "}" || item == "},") {
             prev = prev.substr(0, prev.length - lth);
             v += prev + item + "<br />";
         } else {

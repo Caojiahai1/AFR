@@ -21,12 +21,12 @@ import java.io.File;
  * @since 1.0.0
  */
 @Controller
-public class FaceDetectController {
+public class DetectFaceController {
 
     @Autowired
     private FaceDetectService faceDetectService;
 
-    @RequestMapping(value = "/FaceDetect/detectImage", method = RequestMethod.POST)
+    @RequestMapping(value = "/DetectFace/detectImage", method = RequestMethod.POST)
     @ResponseBody
     public CallResult detectLocalImage(DetectFaceRequestParam param) {
         return faceDetectService.detectImage(param);
