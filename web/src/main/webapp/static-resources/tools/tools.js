@@ -9,6 +9,7 @@ myTools.loading = function () {
         spinner.appendChild(rect);
     }
     document.body.appendChild(spinner);
+    document.body.classList.add("spinnermask");
     document.body.style.userSelect = "none";
     document.body.style.pointerEvents = "none";
 }
@@ -19,6 +20,7 @@ myTools.loadingOver = function () {
     while (spinner.length > 0) {
         document.body.removeChild(spinner[0]);
     }
+    document.body.classList.remove("spinnermask");
     document.body.style.userSelect = "text";
     document.body.style.pointerEvents = "auto";
 }
@@ -44,6 +46,7 @@ myTools.circleLoading = function (parentId) {
         spinner.appendChild(container);
     }
     parent.appendChild(spinner);
+    parent.classList.add("spinnermask");
     document.body.style.userSelect = "none";
     document.body.style.pointerEvents = "none";
 }
@@ -63,6 +66,7 @@ myTools.circleLoadingOver = function (parentId) {
             break;
         }
     }
+    parent.classList.remove("spinnermask");
     document.body.style.userSelect = "text";
     document.body.style.pointerEvents = "auto";
 

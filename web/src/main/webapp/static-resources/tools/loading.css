@@ -176,3 +176,10 @@
           -webkit-transform: scale(1.0);
       }
 }
+
+/*蒙板*/
+.spinnermask{
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    background-color: whitesmoke;
+}
