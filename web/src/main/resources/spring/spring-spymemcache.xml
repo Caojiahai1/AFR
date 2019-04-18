@@ -17,5 +17,7 @@
         <property name="servers" value="${memcache.spymemcacheServers}"></property>
     </bean>
 
-    <bean id="mySpyMemcache" class="com.afr.memcache.MySpyMemcache"></bean>
+    <bean id="mySpyMemcache" class="com.afr.memcache.MySpyMemcache">
+        <property name="timeout" value="${memcache.timeout}"></property>
+    </bean>
 </beans>

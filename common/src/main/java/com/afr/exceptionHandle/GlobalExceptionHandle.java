@@ -18,6 +18,7 @@ public class GlobalExceptionHandle implements HandlerExceptionResolver {
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
+        MyLogger.logger.error(e.getMessage());
         //如果是json格式的ajax请求
         if (request.getHeader("accept").indexOf("application/json") > -1
                 || (request.getHeader("X-Requested-With")!= null && request.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1)) {
@@ -33,7 +34,6 @@ public class GlobalExceptionHandle implements HandlerExceptionResolver {
             return new ModelAndView();
         }
         else{//如果是普通请求
-            MyLogger.logger.error(e.getMessage());
             request.setAttribute("exceptionMessage", e.getMessage());
             return new ModelAndView("error");
         }

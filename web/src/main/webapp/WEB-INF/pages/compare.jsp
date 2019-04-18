@@ -44,7 +44,7 @@
         }
     </style>
 </head>
-<body id="body">
+<body>
 <div class="page-header" align="center">
     <h1 style="    font-size: 24px;
     font-family: PingFangSC-Semibold,Microsoft YaHei;
