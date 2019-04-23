@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author Yan liang
@@ -90,7 +91,7 @@ public class CompareFaceService {
                 callResult.setSuccess(true);
                 callResult.setObject(response);
                 try {
-                    mySpyMemcache.set(key, JsonUtils.writeValueAsString(response));
+                    mySpyMemcache.set(key, 1800, JsonUtils.writeValueAsString(response));
                 } catch (JsonProcessingException e) {
                     MyLogger.logger.error("key:" + key + "加入缓存异常:" + e.getMessage());
                 }

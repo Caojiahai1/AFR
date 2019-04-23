@@ -63,7 +63,7 @@ public class TestController {
     public CallResult setcache () {
         CallResult callResult = new CallResult();
         try {
-            mySpyMemcache.set("111", 333);
+            mySpyMemcache.set("111",100000, 333);
         } catch (Exception e) {
             callResult.setMessage(e.getMessage());
             callResult.setSuccess(false);

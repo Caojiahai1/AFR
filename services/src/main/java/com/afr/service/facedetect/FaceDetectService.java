@@ -73,7 +73,7 @@ public class FaceDetectService {
                 callResult.setSuccess(true);
                 callResult.setObject(response.getFaces());
                 try {
-                    mySpyMemcache.set(key, JsonUtils.writeValueAsString(response));
+                    mySpyMemcache.set(key, 1800, JsonUtils.writeValueAsString(response));
                 } catch (JsonProcessingException e) {
                     MyLogger.logger.error("key:" + key + "加入缓存异常:" + e.getMessage());
                 }

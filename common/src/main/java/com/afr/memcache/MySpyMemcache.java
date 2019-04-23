@@ -7,6 +7,7 @@ import net.spy.memcached.spring.MemcachedClientFactoryBean;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,9 +51,9 @@ public class MySpyMemcache implements DisposableBean {
         return null;
     }
 
-    public Boolean set(String key, Object o) {
+    public Boolean set(String key, int timeout, Object o) {
         try {
-            return get_client().set(key, 0, o).get(getTimeout(), TimeUnit.MILLISECONDS);
+            return get_client().set(key, timeout, o).get(getTimeout(), TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             MyLogger.logger.error("设置缓存key：" + key + "异常" + e.getMessage());
         }
@@ -66,6 +67,15 @@ public class MySpyMemcache implements DisposableBean {
             MyLogger.logger.error("获取缓存key：" + key + "异常" + e.getMessage());
         }
         return null;
+    }
+
+    public boolean delete(String key) {
+        try {
+            return get_client().delete(key).get();
+        } catch (Exception e) {
+            MyLogger.logger.error("清除缓存key：" + key + "异常" + e.getMessage());
+        }
+        return false;
     }
 
     @Override
