@@ -33,8 +33,8 @@ public class MySpyMemcache implements DisposableBean {
     private MemcachedClient _client;
 
     private MemcachedClient get_client() {
-        if (_client == null) {
-            synchronized (object) {
+        synchronized (object) {
+            if (_client == null) {
                 _client =  getMemcacheClient();
             }
         }
