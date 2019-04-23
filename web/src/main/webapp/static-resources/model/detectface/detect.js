@@ -55,6 +55,7 @@ DetectView.search = function (params) {
             $("#NetUrl").val("");
             return;
         }
+        base.clearFaceOutLine();
         base.detectImage({netUrl : netUrl});
         $("#mainImg").attr("src", netUrl);
         base.addImg(netUrl, "");
