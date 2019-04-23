@@ -18,6 +18,8 @@ public class MySpyMemcache implements DisposableBean {
     @Autowired
     MemcachedClientFactoryBean memcachedClientFactoryBean;
 
+    static private Object object = new Object();
+
     private long timeout;
 
     public long getTimeout() {
@@ -32,7 +34,9 @@ public class MySpyMemcache implements DisposableBean {
 
     private MemcachedClient get_client() {
         if (_client == null) {
-            return getMemcacheClient();
+            synchronized (object) {
+                _client =  getMemcacheClient();
+            }
         }
         return _client;
     }
